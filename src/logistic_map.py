@@ -1,5 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.pyplot import figure
 
 
 def gen_log_map(n: int, r: float, y0: float = 0.5) -> np.array:
@@ -8,25 +9,47 @@ def gen_log_map(n: int, r: float, y0: float = 0.5) -> np.array:
     :param n: int, number of points
     :param r: float, rate
     :param y0: float, initial value
-    :return: x, y where x is an array of time-vals and y is the population-vals
+    :return: t, y where t is an array of time-vals and y is the population-vals
     """
-    x = np.zeros(n)
+    t = np.zeros(n)
     y = np.zeros(n)
-    x[0], y[0] = 0, y0
+    t[0], y[0] = 0, y0
     for i in range(n - 1):
         y[i + 1] = r * y[i] * (1 - y[i])
-        x[i + 1] = i + 1
-    return x, y
+        t[i + 1] = i + 1
+    return t, y
+
+
+def create_dual_plot(n: int, r: float, yi_1: float, yi_2: float):
+    """
+    Create plot of logistic map for two different initial values
+    :param n: int, number of points
+    :param r: float, rate
+    :param yi_1: float, first initial value
+    :param yi_2: float,  second initial value
+    :return: None
+    """
+    t1, y1 = gen_log_map(n, r, yi_1)
+    t2, y2 = gen_log_map(n, r, yi_2)
+    figure(figsize=(10, 6), dpi=160)
+    plt.xlabel("timestep")
+    plt.ylabel("population")
+    plt.plot(t1, y1, 'r', marker='.', alpha=0.5, label="y0=%f" % yi_1)
+    plt.plot(t2, y2, 'b', marker='.', alpha=0.5, label="y0=%f" % yi_2)
+    plt.legend(loc="lower right")
+    plt.show()
 
 
 def main():
-    # create plot of logistic map
-    r = 4.0
+    # r=3.800918828, x0=0.10, 0.12 is weird in WolframAlpha
+    # periodic: r = 3.2
+    # chaotic: r = 3.75
+    r = 3.75
     n = 100
-    x0 = 0.8
-    x, y = gen_log_map(n, r, x0)
-    plt.plot(x, y)
-    plt.show()
+    eps = 0.000001
+    yi_1 = 0.10
+    yi_2 = yi_1 + eps
+    create_dual_plot(n, r, yi_1, yi_2)
 
 
 if __name__ == "__main__":
