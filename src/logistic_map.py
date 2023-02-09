@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.pyplot import figure
+import pandas as pd
+import os
 
 
 def gen_log_map(n: int, r: float, y0: float = 0.5) -> np.array:
@@ -40,6 +42,16 @@ def create_dual_plot(n: int, r: float, yi_1: float, yi_2: float):
     plt.show()
 
 
+def save_data(r_vals: list, y0_vals: list, n: int, save_path: str):
+    data = []
+    for r, y0 in zip(r_vals, y0_vals):
+        _, series = gen_log_map(n, r, y0)
+        data.append(series)
+    df = pd.DataFrame(data).T
+    df.to_csv(save_path, header=None, index=None, sep=' ', mode='a')
+    return
+
+
 def main():
     # r=3.800918828, x0=0.10, 0.12 is weird in WolframAlpha
     # periodic: r = 3.2
@@ -52,5 +64,23 @@ def main():
     create_dual_plot(n, r, yi_1, yi_2)
 
 
+def save_main(save_path: str):
+    """
+    Main to cache data used in plotting
+    :return:
+    """
+    r1 = 3.2
+    r2 = 3.75
+    r_vals = [r1, r1, r2, r2]
+    eps = 0.000001
+    yi_1 = 0.10
+    yi_2 = yi_1 + eps
+    y0_vals = [yi_1, yi_2, yi_1, yi_2]
+    save_data(r_vals, y0_vals, n=100, save_path=save_path)
+
+
 if __name__ == "__main__":
-    main()
+    data_dir = "../data/logistic_map"
+    assert os.path.exists(data_dir)
+    save_pth = os.path.join(data_dir, "data.txt")
+    save_main(save_pth)
