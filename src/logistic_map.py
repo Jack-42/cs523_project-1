@@ -42,6 +42,15 @@ def create_dual_plot(t_steps: int, r: float, yi_1: float, yi_2: float):
     plt.show()
 
 
+def _helper_save(df: pd.DataFrame, n: int, data_dir: str):
+    pth1 = os.path.join(data_dir, "full_data.txt")
+    df.to_csv(pth1, header=None, index=None, sep=' ', mode='a')
+    pth2 = os.path.join(data_dir, "first_n=%d_data.txt" % n)
+    df.iloc[0:n].to_csv(pth2, header=None, index=None, sep=' ', mode='a')
+    pth3 = os.path.join(data_dir, "remaining_data.txt")
+    df.iloc[n:].to_csv(pth3, header=None, index=None, sep=' ', mode='a')
+
+
 def save_data(r_vals: list, y0_vals: list, t_steps: int, n: int,
               data_dir: str):
     """
@@ -63,12 +72,17 @@ def save_data(r_vals: list, y0_vals: list, t_steps: int, n: int,
         _, series = gen_log_map(t_steps, r, y0)
         data.append(series)
     df = pd.DataFrame(data).T
-    pth1 = os.path.join(data_dir, "full_data.txt")
-    df.to_csv(pth1, header=None, index=None, sep=' ', mode='a')
-    pth2 = os.path.join(data_dir, "first_n=%d_data.txt" % n)
-    df.iloc[0:n].to_csv(pth2, header=None, index=None, sep=' ', mode='a')
-    pth3 = os.path.join(data_dir, "remaining_data.txt")
-    df.iloc[n:].to_csv(pth3, header=None, index=None, sep=' ', mode='a')
+    # save complete data
+    _helper_save(df, n, os.path.join(data_dir, "original"))
+    # bin data
+    n_bins = 10
+    binned_data = []
+    labels = np.arange(n_bins)
+    for series in data:
+        binned_series = pd.cut(series, bins=n_bins, labels=labels)
+        binned_data.append(binned_series)
+    df_bin = pd.DataFrame(binned_data)
+    _helper_save(df_bin, n, os.path.join(data_dir, "binned"))
     print("Successfully saved data to:", data_dir)
     return None
 
