@@ -61,10 +61,7 @@ def main(data_dir: str):
     fig, axs = plt.subplots(1, 2, figsize=(8, 4), constrained_layout=True)
     first_plot = True
     for run_dir in os.listdir(data_dir):
-        print(run_dir)
         fpath = os.path.join(data_dir, run_dir, "simcov.stats")
-        print(fpath)
-        assert os.path.exists(fpath)
         stats_df = pd.read_csv(fpath, sep='\t')
         stats_df = stats_df.rename(columns={'# time': 'time'})
         add_stats(stats_df, axs, first_plot)
