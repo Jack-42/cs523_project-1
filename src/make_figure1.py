@@ -49,7 +49,7 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
     return None
 
 
-def main(data_dir: str):
+def main(data_dir: str, save_pth: str = None):
     assert os.path.exists(data_dir)
     style.use('fivethirtyeight')
     plt.rc('axes', titlesize=12)
@@ -65,11 +65,15 @@ def main(data_dir: str):
         stats_df = pd.read_csv(fpath, sep='\t')
         stats_df = stats_df.rename(columns={'# time': 'time'})
         add_stats(stats_df, axs, first_plot)
-        first_plot = False  # don't add additional keys, not necessary
+        first_plot = False  # don't add additional keys, not necessary\
+
+    if save_pth is not None:
+        plt.savefig(save_pth)
     plt.show()
     return fig
 
 
 if __name__:
     data_folder = "../data/simcov/stable"
-    main(data_folder)
+    save_pth = "../figures/figure1.png"
+    main(data_folder, save_pth)

@@ -1,8 +1,9 @@
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.pyplot import figure
 import pandas as pd
-import os
+from matplotlib import style
 
 
 def gen_log_map(t_steps: int, r: float, y0: float = 0.5) -> np.array:
@@ -22,24 +23,21 @@ def gen_log_map(t_steps: int, r: float, y0: float = 0.5) -> np.array:
     return t, y
 
 
-def create_dual_plot(t_steps: int, r: float, yi_1: float, yi_2: float):
+def create_dual_plot(t_steps: int, r: float, yi_1: float, yi_2: float, ax):
     """
     Create plot of logistic map for two different initial values
     :param t_steps: int, number of time steps/points
     :param r: float, rate
     :param yi_1: float, first initial value
     :param yi_2: float,  second initial value
+    :param ax: matplotlib axis
     :return: None
     """
     t1, y1 = gen_log_map(t_steps, r, yi_1)
     t2, y2 = gen_log_map(t_steps, r, yi_2)
-    figure(figsize=(10, 6), dpi=160)
-    plt.xlabel("timestep")
-    plt.ylabel("population")
-    plt.plot(t1, y1, 'r', marker='.', alpha=0.5, label="y0=%f" % yi_1)
-    plt.plot(t2, y2, 'b', marker='.', alpha=0.5, label="y0=%f" % yi_2)
-    plt.legend(loc="lower right")
-    plt.show()
+    ax.plot(t1, y1, 'r', lw=1, marker='.', alpha=0.5, label="$x_{0}$=%f" % yi_1)
+    ax.plot(t2, y2, 'b', lw=1, marker='.', alpha=0.5, label="$x_{0}$=%f" % yi_2)
+    return None
 
 
 def _helper_save(df: pd.DataFrame, n: int, data_dir: str):
@@ -87,16 +85,35 @@ def save_data(r_vals: list, y0_vals: list, t_steps: int, n: int,
     return None
 
 
-def main():
+def main(save_pth: str = None):
     # r=3.800918828, x0=0.10, 0.12 is weird in WolframAlpha
     # periodic: r = 3.2
     # chaotic: r = 3.75, diverges around t=37
-    r = 3.75
+    style.use('fivethirtyeight')
+    plt.rc('axes', titlesize=12)
+    plt.rc('axes', labelsize=10)
+    plt.rc('xtick', labelsize=8)
+    plt.rc('ytick', labelsize=8)
+    plt.rc('legend', fontsize=8)
+    plt.rcParams['figure.dpi'] = 200
+    fig, axs = plt.subplots(2, 1, figsize=(8, 4), constrained_layout=True,
+                            sharex='all', sharey='all')
+    axs[1].set_xlabel('timestep')
+    for ax in axs:
+        ax.set_ylabel('population')
+
+    r1 = 3.2
+    r2 = 3.75
     n = 100
     eps = 0.000001
     yi_1 = 0.10
     yi_2 = yi_1 + eps
-    create_dual_plot(n, r, yi_1, yi_2)
+    create_dual_plot(n, r1, yi_1, yi_2, axs[0])
+    create_dual_plot(n, r2, yi_1, yi_2, axs[1])
+    axs[0].legend(loc="lower right")
+    if save_pth is not None:
+        plt.savefig(save_pth)
+    plt.show()
 
 
 def save_main(data_dir: str):
@@ -116,7 +133,8 @@ def save_main(data_dir: str):
 
 
 if __name__ == "__main__":
-    data_folder = "../data/logistic_map"
-    assert os.path.exists(data_folder)
-    save_main(data_folder)
-    # main()
+    # data_folder = "../data/logistic_map"
+    # assert os.path.exists(data_folder)
+    # save_main(data_folder)
+    save_pth = "../figures/figure3.png"
+    main(save_pth)
