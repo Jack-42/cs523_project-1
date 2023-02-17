@@ -65,12 +65,14 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
     return None
 
 
-def get_dfs(data_dir: str):
+def get_dfs(data_dir: str, max_len: int = None):
     dfs = []
     for run_dir in os.listdir(data_dir):
         fpath = os.path.join(data_dir, run_dir, "simcov.stats")
         stats_df = pd.read_csv(fpath, sep='\t')
         stats_df = stats_df.rename(columns={'# time': 'time'})
+        if max_len is not None:
+            stats_df = stats_df.iloc[0:max_len]
         dfs.append(stats_df)
     return dfs
 
@@ -78,9 +80,13 @@ def get_dfs(data_dir: str):
 if __name__:
     # will use different data dirs once we have all our configs
     data_dir1 = "../data/simcov/stable"
-    data_dir2 = "../data/simcov/stable"
-    data_dir3 = "../data/simcov/stable"
+    data_dir2 = "../data/simcov/periodic"
+    data_dir3 = "../data/simcov/periodic_2"
     dfs_1 = get_dfs(data_dir1)
-    dfs_2 = get_dfs(data_dir2)
-    dfs_3 = get_dfs(data_dir3)
+    dfs_2 = get_dfs(data_dir2, max_len=len(dfs_1[0]))
+    dfs_3 = get_dfs(data_dir3, max_len=len(dfs_1[0]))
+    print(len(dfs_1[0]))
+    print(len(dfs_2[0]))
+    print(len(dfs_3[0]))
+
     main(dfs_1, dfs_2, dfs_3)
