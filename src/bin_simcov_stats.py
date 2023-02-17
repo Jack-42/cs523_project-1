@@ -33,6 +33,6 @@ def main(file_path: str, save_path: str):
 
 
 if __name__ == "__main__":
-    fpath = "../data/simcov/stable/c5_r1-results/simcov.stats"
-    sv_path = "../data/simcov/binned/stable.txt"
+    fpath = "../data/simcov/periodic/c7-1/simcov.stats"
+    sv_path = "../data/simcov/binned/periodic.txt"
     main(fpath, sv_path)

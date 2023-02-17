@@ -81,7 +81,7 @@ if __name__:
     # will use different data dirs once we have all our configs
     data_dir1 = "../data/simcov/stable"
     data_dir2 = "../data/simcov/periodic"
-    data_dir3 = "../data/simcov/periodic_2"
+    data_dir3 = "../data/simcov/chaotic"
     dfs_1 = get_dfs(data_dir1)
     dfs_2 = get_dfs(data_dir2, max_len=len(dfs_1[0]))
     dfs_3 = get_dfs(data_dir3, max_len=len(dfs_1[0]))

@@ -17,10 +17,10 @@ def main(cases_pth: str, deaths_pth: str):
     """
     cases_df = pd.read_csv(cases_pth)
     deaths_df = pd.read_csv(deaths_pth)
-    world_cases_df = cases_df['World']
-    world_deaths_df = deaths_df['World']
-    print(world_cases_df.head())
-    print(world_deaths_df.head())
+    world_cases_df = cases_df.rename(columns={'World': 'Cases'})['Cases']
+    world_deaths_df = deaths_df.rename(columns={'World': 'Deaths'})['Deaths']
+    df = pd.DataFrame([world_cases_df, world_deaths_df]).T
+    print(df.head())
 
 
 if __name__ == "__main__":
