@@ -22,7 +22,7 @@ def main(file_path: str, save_path: str):
     df = df[['tot_infected', 'virs']]
     # tot_infected col 1, virs col 2
     df_bin = df
-    n_bins = 20
+    n_bins = 10
     labels = np.arange(n_bins)
     df_bin['tot_infected'] = pd.cut(df['tot_infected'], labels=labels,
                                     bins=n_bins)
@@ -33,6 +33,7 @@ def main(file_path: str, save_path: str):
 
 
 if __name__ == "__main__":
-    fpath = "../data/simcov/periodic/c7-1/simcov.stats"
-    sv_path = "../data/simcov/binned/periodic.txt"
+    config = 'stable'
+    fpath = "../data/simcov/%s/c5_r1-results/simcov.stats" % config
+    sv_path = "../data/simcov/binned/%s.txt" % config
     main(fpath, sv_path)

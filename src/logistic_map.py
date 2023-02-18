@@ -95,7 +95,7 @@ def main(save_pth: str = None):
     plt.rc('xtick', labelsize=8)
     plt.rc('ytick', labelsize=8)
     plt.rc('legend', fontsize=8)
-    plt.rcParams['figure.dpi'] = 200
+    plt.rcParams['figure.dpi'] = 400
     fig, axs = plt.subplots(2, 1, figsize=(8, 4), constrained_layout=True,
                             sharex='all', sharey='all')
     axs[1].set_xlabel('timestep')
