@@ -32,7 +32,7 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
     if not first_plot:
         return None
     ax.legend(loc='upper left')
-    ax.set_xlabel('Time (days)')
+    ax.set_xlabel('Time (days)', fontdict={"size":12})
     ax.set_title(title)
     xticks = ax.get_xticks()
     if log_scale:
@@ -45,12 +45,12 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
 def main(data_dir: str, save_pth: str = None):
     assert os.path.exists(data_dir)
     style.use('fivethirtyeight')
-    plt.rc('axes', titlesize=12)
-    plt.rc('axes', labelsize=10)
+    plt.rc('axes', titlesize=14)
+    plt.rc('axes', labelsize=12)
     plt.rc('xtick', labelsize=8)
     plt.rc('ytick', labelsize=8)
-    plt.rc('legend', fontsize=8)
-    plt.rcParams['figure.dpi'] = 200
+    plt.rc('legend', fontsize=12)
+    plt.rcParams['figure.dpi'] = 300
     fig, axs = plt.subplots(1, 1, figsize=(8, 4), constrained_layout=True)
     first_plot = True
 
@@ -83,5 +83,5 @@ def main(data_dir: str, save_pth: str = None):
 
 if __name__:
     data_folder = "../data/real_world"
-    save_pth = "../data/real_world/figures/figure4.png"
+    save_pth = "../figures/figure5.png"
     main(data_folder, save_pth)

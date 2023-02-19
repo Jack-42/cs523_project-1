@@ -21,12 +21,12 @@ def main(dfs1: list, dfs2: list, dfs3: list, save_pth: str = None):
     # expects stats from 3 config files, each having multiple runs
     style.use('fivethirtyeight')
 
-    plt.rc('axes', titlesize=12)
-    plt.rc('axes', labelsize=10)
+    plt.rc('axes', titlesize=14)
+    plt.rc('axes', labelsize=12)
     plt.rc('xtick', labelsize=8)
     plt.rc('ytick', labelsize=8)
     plt.rc('legend', fontsize=8)
-    plt.rcParams['figure.dpi'] = 200
+    plt.rcParams['figure.dpi'] = 300
     fig, axs = plt.subplots(1, 3, figsize=(8, 4),
                             constrained_layout=True, sharey='row')
     dfs = [dfs1, dfs2, dfs3]
@@ -86,8 +86,9 @@ if __name__:
     data_dir1 = "../data/simcov/stable"
     data_dir2 = "../data/simcov/periodic"
     data_dir3 = "../data/simcov/chaotic"
-    save_pth = "../figures/figure4.png"
-    cutoff = 1440 * 15  # interesting dynamics start ~ day 15
+    save_pth = "../figures/figure2.png"
+    # cutoff = 1440 * 15  # interesting dynamics start ~ day 15
+    cutoff = None
     dfs_1 = get_dfs(data_dir1, cutoff)
     dfs_2 = get_dfs(data_dir2, cutoff)
     dfs_3 = get_dfs(data_dir3, cutoff)

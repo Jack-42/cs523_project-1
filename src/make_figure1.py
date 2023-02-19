@@ -52,12 +52,12 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
 def main(data_dir: str, save_pth: str = None):
     assert os.path.exists(data_dir)
     style.use('fivethirtyeight')
-    plt.rc('axes', titlesize=12)
-    plt.rc('axes', labelsize=10)
+    plt.rc('axes', titlesize=14)
+    plt.rc('axes', labelsize=12)
     plt.rc('xtick', labelsize=8)
     plt.rc('ytick', labelsize=8)
     plt.rc('legend', fontsize=8)
-    plt.rcParams['figure.dpi'] = 200
+    plt.rcParams['figure.dpi'] = 300
     fig, axs = plt.subplots(1, 2, figsize=(8, 4), constrained_layout=True)
     first_plot = True
     for run_dir in os.listdir(data_dir):

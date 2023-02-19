@@ -90,12 +90,12 @@ def main(save_pth: str = None):
     # periodic: r = 3.2
     # chaotic: r = 3.75, diverges around t=37
     style.use('fivethirtyeight')
-    plt.rc('axes', titlesize=12)
-    plt.rc('axes', labelsize=10)
+    plt.rc('axes', titlesize=14)
+    plt.rc('axes', labelsize=12)
     plt.rc('xtick', labelsize=8)
     plt.rc('ytick', labelsize=8)
-    plt.rc('legend', fontsize=8)
-    plt.rcParams['figure.dpi'] = 400
+    plt.rc('legend', fontsize=12)
+    plt.rcParams['figure.dpi'] = 300
     fig, axs = plt.subplots(2, 1, figsize=(8, 4), constrained_layout=True,
                             sharex='all', sharey='all')
     axs[1].set_xlabel('timestep')
