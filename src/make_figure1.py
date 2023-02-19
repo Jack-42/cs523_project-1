@@ -19,7 +19,7 @@ def add_stats(df: pd.DataFrame, axs, first_plot=True):
                  labels=labels1, colors=colors1, title='',
                  first_plot=first_plot)
     plot_subplot(ax_vload_tcell, df, ['ttis', 'virs'], labels=labels2,
-                 colors=colors2, title='', first_plot=first_plot)
+                 colors=colors2, title='', first_plot=first_plot, alpha=0.6)
     return None
 
 
