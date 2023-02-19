@@ -5,6 +5,11 @@ import numpy as np
 import pandas as pd
 from matplotlib import style
 
+"""
+This file contains functions related to generating, plotting, and binning/saving
+data from the logistic map.
+"""
+
 
 def gen_log_map(t_steps: int, r: float, y0: float = 0.5) -> np.array:
     """

@@ -82,12 +82,11 @@ def get_dfs(data_dir: str, cutoff: int = None):
 
 
 if __name__:
-    # will use different data dirs once we have all our configs
     data_dir1 = "../data/simcov/stable"
     data_dir2 = "../data/simcov/periodic"
     data_dir3 = "../data/simcov/chaotic"
     save_pth = "../figures/figure2.png"
-    # cutoff = 1440 * 15  # interesting dynamics start ~ day 15
+    # cutoff = 1440 * 15  # for fig 4, interesting dynamics start ~ day 15
     cutoff = None
     dfs_1 = get_dfs(data_dir1, cutoff)
     dfs_2 = get_dfs(data_dir2, cutoff)

@@ -12,8 +12,8 @@ def add_stats(df: pd.DataFrame, axs, first_plot=True):
     colors1 = ['red', 'black']
     labels1 = ['Cases', 'Deaths']
 
-
-    plot_subplot(ax_casesvdeaths, df, ['Cases', 'Deaths'], labels=labels1, colors=colors1,
+    plot_subplot(ax_casesvdeaths, df, ['Cases', 'Deaths'], labels=labels1,
+                 colors=colors1,
                  title='', first_plot=first_plot)
     return None
 
@@ -32,7 +32,7 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
     if not first_plot:
         return None
     ax.legend(loc='upper left')
-    ax.set_xlabel('Time (days)', fontdict={"size":12})
+    ax.set_xlabel('Time (days)', fontdict={"size": 12})
     ax.set_title(title)
     xticks = ax.get_xticks()
     if log_scale:
@@ -68,12 +68,10 @@ def main(data_dir: str, save_pth: str = None):
 
     newdf = pd.DataFrame([cases_df, deaths_df]).T
 
-    newdf.insert(0,"day",np.arange(0,len(newdf)))
+    newdf.insert(0, "day", np.arange(0, len(newdf)))
     print(newdf.head())
 
-
     add_stats(newdf, axs, first_plot)
-    first_plot = False  # don't add additional keys, not necessary\
 
     if save_pth is not None:
         plt.savefig(save_pth)

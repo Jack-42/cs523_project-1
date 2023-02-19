@@ -1,3 +1,7 @@
+
+import pandas as pd
+import numpy as np
+
 """
 @author Jack Ringer
 Date: 2/17/2023
@@ -5,9 +9,6 @@ Description:
 Script used to bin real-world data from:
 https://github.com/owid/covid-19-data/tree/master/public/data/jhu
 """
-import pandas as pd
-import numpy as np
-
 
 def main(cases_pth: str, deaths_pth: str, save_path: str):
     """

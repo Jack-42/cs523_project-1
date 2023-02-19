@@ -5,6 +5,14 @@ import pandas as pd
 from matplotlib import style
 import numpy as np
 
+"""
+@author Jack Ringer
+Description: This file is used plot figure 2c from the original SimCOV paper.
+Please note that much of this code is based upon the dynamic_plot script from
+the SimCOV project found here: 
+https://github.com/AdaptiveComputationLab/simcov/blob/master/scripts/dynamic_plot.py
+"""
+
 
 def add_stats(df: pd.DataFrame, axs, first_plot=True):
     ax_epicells = axs[0]
