@@ -68,12 +68,15 @@ def plot_subplot(ax, df, columns, title, colors, labels, alpha=1.0,
     return None
 
 
-def get_dfs(data_dir: str):
+def get_dfs(data_dir: str, cutoff: int = None):
     dfs = []
     for run_dir in os.listdir(data_dir):
         fpath = os.path.join(data_dir, run_dir, "simcov.stats")
         stats_df = pd.read_csv(fpath, sep='\t')
         stats_df = stats_df.rename(columns={'# time': 'time'})
+        if cutoff is not None:
+            # only include interesting part of graph for figure 4
+            stats_df = stats_df.loc[stats_df['time'] > cutoff]
         dfs.append(stats_df)
     return dfs
 
@@ -83,9 +86,10 @@ if __name__:
     data_dir1 = "../data/simcov/stable"
     data_dir2 = "../data/simcov/periodic"
     data_dir3 = "../data/simcov/chaotic"
-    save_pth = "../figures/figure2.png"
-    dfs_1 = get_dfs(data_dir1)
-    dfs_2 = get_dfs(data_dir2)
-    dfs_3 = get_dfs(data_dir3)
+    save_pth = "../figures/figure4.png"
+    cutoff = 1440 * 15  # interesting dynamics start ~ day 15
+    dfs_1 = get_dfs(data_dir1, cutoff)
+    dfs_2 = get_dfs(data_dir2, cutoff)
+    dfs_3 = get_dfs(data_dir3, cutoff)
 
     main(dfs_1, dfs_2, dfs_3, save_pth)
